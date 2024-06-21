@@ -77,3 +77,102 @@ myAddFunc = addFunc;
 */
 
 /* Classes in TS */ 
+
+abstract class Student{
+
+    name: string;
+    rollNo: number;
+    private skills: string[] = [];
+
+    constructor(n: string, r: number){
+        this.name = n;
+        this.rollNo = r;
+    }
+
+    // addSkill(skill: string){
+    //     this.skills.push(skill);
+    // }
+
+    abstract addSkill(skill: string): void;
+
+    getSkills(){
+        return this.skills;
+    }
+}
+
+/**
+const std1 = new Student("Hamid", 2003);
+std1.addSkill('Frontend Developer');
+console.log(std1);
+*/ 
+
+/* Inheritance */ 
+class Volunter extends Student{
+
+    private canVolunteerIn: string[] = [];
+    static id: string = "KSW-029";
+
+    constructor(name: string, rollNo: number) {
+        super(name, rollNo);
+    }
+
+    addVolunteerSkill(skill: string){
+        this.canVolunteerIn.push(skill);
+    }
+
+    get willVolunteerIn (){
+        return this.canVolunteerIn;
+    }
+
+    set willVolunteerIn (skills: string[]){
+        for(const skill of skills){
+            if(!skill){
+                return;
+            }
+        }
+        this.canVolunteerIn = skills;
+    }
+
+    addSkill(skill: string): void {
+        
+    }
+}
+
+/*
+const volStd1 = new Volunter("Amjad", 188);
+volStd1.addSkill('MERN Stack Developer');
+volStd1.addVolunteerSkill('Check Exams');
+console.log(volStd1);
+volStd1.willVolunteerIn = ["Attendence Checker", "Exam Checker"];
+console.log(volStd1.willVolunteerIn);
+console.log(Volunter.id);
+*/ 
+
+
+/* Singleton */ 
+
+class Human{
+
+    static object: Human;
+
+    private constructor(private name: string){
+
+    }
+
+    static getObject(name: string){
+
+        if(this.object){
+            return this.object;
+        }
+
+        this.object = new Human(name);
+        return this.object;
+
+    }
+}
+/*
+const saim = Human.getObject("Dr. Saim");
+const riz = Human.getObject("Engr. Riz");
+console.log(saim);
+console.log(riz)
+*/
