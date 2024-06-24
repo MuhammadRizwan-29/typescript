@@ -135,10 +135,11 @@ class Human {
         return this.object;
     }
 }
-/*
-const saim = Human.getObject("Dr. Saim");
-const riz = Human.getObject("Engr. Riz");
-console.log(saim);
-console.log(riz)
-*/ 
+class HumanB {
+    constructor(name) {
+        this.name = name;
+    }
+    speak(sentence) {
+    }
+}
 //# sourceMappingURL=app.js.map

@@ -176,3 +176,207 @@ const riz = Human.getObject("Engr. Riz");
 console.log(saim);
 console.log(riz)
 */
+
+/* Interface */ 
+/*
+interface Person{
+    name: string;
+};
+let saim: Person;
+saim = {
+    name: "Dr. Saim"
+}
+*/ 
+
+/*
+interface Person{
+    name: string;
+    speak(sentence: string): void;
+}
+
+class HumanB implements Person{
+    
+    constructor(public name: string){}
+
+    speak(sentence: string): void {
+        
+    }
+}
+
+
+import { Person } from "./types";
+let saim: Person;
+
+saim = {
+    name: "SAIM",
+    speak(sentence: string) {
+        
+    },
+}
+*/ 
+
+/* Advance TYPES */ 
+/*
+//  UNION
+type combined = string | number;
+let abc: combined;
+abc = 12;
+abc="New";
+
+// INTERSECTION
+type Bird = {
+    name: string,
+    flyingSpeed: number
+}
+type Animal = {
+    name: string,
+    runningSpeed: number
+}
+type Creature = Bird & Animal;
+
+let hen: Creature;
+hen = {
+    name: "Hen",
+    runningSpeed: 45,
+    flyingSpeed: 22
+}
+
+interface Bird {
+    name: string,
+    flyingSpeed: number
+}
+interface Animal {
+    name: string,
+    runningSpeed: number
+}
+interface Creature extends Bird, Animal{}
+
+
+
+// Types GUARDS
+
+
+type Bird = {
+    name: string,
+    flyingSpeed: number
+}
+type Animal = {
+    name: string,
+    runningSpeed: number
+}
+
+type Creature = Bird | Animal;
+
+function log(creature: Creature){
+    console.log(creature.name)
+    // console.log(creature.runningSpeed);
+    if("runningSpeed" in creature){
+        console.log(creature.runningSpeed);
+    }
+    if("flyingSpeed" in creature){
+        console.log(creature.flyingSpeed);
+    }
+}
+log({name: "Donkey", runningSpeed: 30});
+
+// Class Level
+class BirdC{
+    constructor(public name: string, public runningSpeed: number){}
+}
+class AnimalC{
+    constructor(public name: string, public flyingSpeed: number){}
+}
+
+type CreatureC = BirdC | AnimalC;
+
+function logC(creature: Creature){
+    console.log(creature.name)
+    // console.log(creature.runningSpeed);
+    if(creature instanceof BirdC){
+        console.log(creature.runningSpeed);
+    }
+    if(creature instanceof AnimalC){
+        console.log(creature.flyingSpeed);
+    }
+}
+logC(new AnimalC("Dong", 70));
+
+*/
+
+// Type Casting | Generics | Decorators & Function Overloading
+
+// Generics
+const input1 = <HTMLInputElement>document.getElementById("num1");
+
+const promise: Promise<string> = new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+        resolve("DONE");
+    }, 2000)
+});
+
+promise.then(data=>{
+    data.split("");
+})
+
+function merger<T extends object, U extends object>(objA: T, objB: U){
+    return {...objA, ...objB}
+}
+const mergeObj = merger({name: "Saim"}, {age: 24});
+console.log(mergeObj.age);
+
+// Decoraters
+function Logger(data: string){
+    return function(_: Function){
+        console.log("Logging......" + data);
+    }
+}
+
+function FillHTML(template: string, id: string){
+    return function(_: Function){
+        const el = document.getElementById(id);
+        if(el){
+            el.innerHTML = template;
+        }
+    }
+}
+@Logger("data")
+@FillHTML("Here's my template text", "para_text")
+class PersonD {
+    name = "Saim";
+
+    constructor(){
+        console.log("Called");
+    }
+}
+
+const saimD = new PersonD();
+
+// Overloading
+type CombinedT = string | number;
+
+/* 
+function addC (a: CombinedT, b: CombinedT){
+    if(typeof a === "number" && typeof b === "number"){
+        return a+b;
+    } else if(typeof a === "string" && typeof b === "string"){
+        return a+b;
+    }else{
+        throw Error("Please check types.");
+    }
+}
+*/
+function addC (a: string, b: string):string;
+function addC (a: number, b: number):number;
+function addC (a: CombinedT, b: CombinedT){
+    if(typeof a === "number" && typeof b === "number"){
+        return a+b;
+    } else if(typeof a === "string" && typeof b === "string"){
+        return a+b;
+    }else{
+        throw Error("Please check types.");
+    }
+}
+
+addC(1, 2);
+addC("abc", "def");
+// addC()
